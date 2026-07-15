@@ -1,11 +1,13 @@
 import logging
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 # Import configurations
 from utils.config import settings
+# Import services
+from services.upload_service import validate_and_save_image
 
 # Configure logging
 logging.basicConfig(
@@ -43,6 +45,12 @@ class ServiceVersion(BaseModel):
     version: str = Field(..., description="The semantic version of the service API", examples=["1.0"])
 
 
+class DetectResponse(BaseModel):
+    filename: str = Field(..., description="The unique name under which the file was saved")
+    filepath: str = Field(..., description="The relative path to the saved file")
+    message: str = Field(..., description="Status message of the upload confirmation")
+
+
 # Root Endpoint (Health check)
 @app.get(
     "/",
@@ -71,6 +79,22 @@ async def get_version():
     """
     logger.info("Version endpoint requested.")
     return {"version": settings.API_VERSION}
+
+
+# Image upload endpoint
+@app.post(
+    "/detect",
+    response_model=DetectResponse,
+    summary="Detect / Image Upload Endpoint",
+    description="Accepts an image via multipart/form-data, validates it, and saves it to the uploads directory."
+)
+async def detect(image: UploadFile = File(...)):
+    """
+    Accepts an image inside a multipart form request, validates that it has a valid extension (jpg, jpeg, png),
+    and saves the file locally in the uploads folder.
+    """
+    logger.info("Detect endpoint requested for file upload.")
+    return validate_and_save_image(image)
 
 
 # Entrypoint to run the server directly using Uvicorn
