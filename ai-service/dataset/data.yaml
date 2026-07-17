@@ -1,0 +1,10 @@
+path: ./dataset
+train: images/train
+val: images/val
+
+# Classes
+nc: 3
+names:
+  0: Pothole
+  1: Electricity
+  2: Water Leakage
