@@ -15,7 +15,7 @@ This report details partition distributions and labels statistics.
 
 ## 2. Bounding Box Distribution per Split
 
-| Split | Pothole (Class 0) | Electricity (Class 1) | Water Leakage (Class 2) | Total |
+| Split | Pothole (Class 0) | Electricity (Class 1) | Water Leakage (Class 2) | Total | 
 | :--- | :---: | :---: | :---: | :---: |
 | **Train** | 51 | 70 | 53 | 174 |
 | **Val** | 18 | 20 | 11 | 49 |
