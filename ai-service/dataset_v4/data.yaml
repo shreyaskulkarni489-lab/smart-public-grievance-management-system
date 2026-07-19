@@ -1,0 +1,8 @@
+names:
+  0: Pothole
+  1: Electricity
+  2: Water Leakage
+path: c:\Users\Shreyas\OneDrive\Desktop\Main\ai-service\dataset_v4
+test: images/test
+train: images/train
+val: images/val
